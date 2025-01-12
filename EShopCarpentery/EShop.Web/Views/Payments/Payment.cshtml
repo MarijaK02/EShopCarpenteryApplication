@@ -1,0 +1,76 @@
+﻿@model EShop.Web.Models.Domain.Order
+
+@{
+    ViewData["Title"] = "Payment";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Payment</h2>
+
+    <div class="card shadow">
+        <div class="card-body">
+            <form method="post" asp-action="Pay">
+                <!-- Hidden field for OrderId -->
+                <input type="hidden" name="orderId" value="@Model.Id" />
+
+                <!-- Payment Option -->
+                <div class="form-group mb-4">
+                    <label class="fw-bold">Payment Option</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" id="payNow" name="paymentOption" value="PayNow" onchange="togglePaymentForm()" checked />
+                        <label class="form-check-label" for="payNow">Pay Now</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" id="payWhenDelivered" name="paymentOption" value="PayWhenDelivered" onchange="togglePaymentForm()" />
+                        <label class="form-check-label" for="payWhenDelivered">Pay When Delivered</label>
+                    </div>
+                </div>
+
+                <!-- Payment Form (Hidden for "Pay When Delivered") -->
+                <div id="paymentForm" class="mb-4">
+                    <div class="form-group mb-3">
+                        <label for="CardNumber" class="fw-bold">Card Number</label>
+                        <input type="text" class="form-control" id="CardNumber" name="CardNumber" placeholder="1234 5678 9101 1121" />
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="CCV" class="fw-bold">CCV</label>
+                        <input type="text" class="form-control" id="CCV" name="CCV" placeholder="123" />
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="ExpirationDate" class="fw-bold">Expiration Date</label>
+                        <input type="text" class="form-control" id="ExpirationDate" name="ExpirationDate" placeholder="MM/YY" />
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary fw-bold" id="submitButton">
+                        <i class="fas fa-credit-card me-2"></i>Pay Now
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Toggle payment form visibility based on selected payment option
+    function togglePaymentForm() {
+        var paymentOption = document.querySelector('input[name="paymentOption"]:checked').value;
+        var paymentForm = document.getElementById("paymentForm");
+        var button = document.getElementById("submitButton");
+
+        if (paymentOption === "PayNow") {
+            paymentForm.hidden = false; // Show payment form for "Pay Now"
+            button.innerHTML = '<i class="fas fa-credit-card me-2"></i>Pay Now';
+        } else {
+            paymentForm.hidden = true; // Hide payment form for "Pay When Delivered"
+            button.innerHTML = '<i class="fas fa-shopping-cart me-2"></i>Place Order';
+        }
+    }
+
+    // Initialize form visibility on page load
+    document.addEventListener("DOMContentLoaded", function () {
+        togglePaymentForm();
+    });
+</script>

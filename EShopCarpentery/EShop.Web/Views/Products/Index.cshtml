@@ -1,0 +1,70 @@
+﻿@model IEnumerable<EShop.Web.Models.Domain.Product>
+
+@{
+    ViewData["Title"] = "Products";
+}
+
+<h1 class="text-center mb-4">Products</h1>
+
+<div class="container">
+    <!-- Admin Options -->
+    @if (User.IsInRole("Admin"))
+    {
+        <div class="mb-3">
+            <a asp-action="Create" class="btn btn-primary">Create New Product</a>
+        </div>
+    }
+
+    <!-- Product Table -->
+    <table class="table table-bordered table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.ProductName)</th>
+                <th>@Html.DisplayNameFor(model => model.ProductDescription)</th>
+                <th>@Html.DisplayNameFor(model => model.ProductImage)</th>
+                <th>@Html.DisplayNameFor(model => model.MaterialType)</th>
+                <th>@Html.DisplayNameFor(model => model.CategoryTypes)</th>
+                <th>@Html.DisplayNameFor(model => model.Height)</th>
+                <th>@Html.DisplayNameFor(model => model.Width)</th>
+                <th>@Html.DisplayNameFor(model => model.Length)</th>
+                <th>@Html.DisplayNameFor(model => model.Price)</th>
+                <th>@Html.DisplayNameFor(model => model.Stock)</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.ProductName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.ProductDescription)</td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(item.ProductImage))
+                        {
+                            <img src="@item.ProductImage" alt="Product Image" style="max-width: 100px; max-height: 100px;" />
+                        }
+                        else
+                        {
+                            <span class="text-muted">No Image</span>
+                        }
+                    </td>
+                    <td>@Html.DisplayFor(modelItem => item.MaterialType)</td>
+                    <td>@Html.DisplayFor(modelItem => item.CategoryTypes)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Height)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Width)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Length)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Price)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Stock)</td>
+                    <td>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Edit</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Delete</a>
+                        }
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm">Details</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

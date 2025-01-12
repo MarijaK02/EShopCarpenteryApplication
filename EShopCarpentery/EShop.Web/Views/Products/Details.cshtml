@@ -1,0 +1,69 @@
+﻿@model EShop.Web.Models.Domain.Product
+
+@{
+    ViewData["Title"] = "Product Details";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Product Details</h2>
+
+    <div class="card shadow">
+        <div class="card-body">
+            <h4 class="card-title">@Model.ProductName</h4>
+            <hr />
+            <dl class="row">
+                <dt class="col-sm-3 text-muted">Description</dt>
+                <dd class="col-sm-9">@Model.ProductDescription</dd>
+
+                <dt class="col-sm-3 text-muted">Image</dt>
+                <dd class="col-sm-9">
+                    @if (!string.IsNullOrEmpty(Model.ProductImage))
+                    {
+                        <img src="@Model.ProductImage" alt="@Model.ProductName" class="img-fluid rounded" style="max-width: 100%; height: auto;" />
+                    }
+                    else
+                    {
+                        <span class="text-muted">No image available</span>
+                    }
+                </dd>
+
+                <dt class="col-sm-3 text-muted">Material Type</dt>
+                <dd class="col-sm-9">@Model.MaterialType</dd>
+
+                <dt class="col-sm-3 text-muted">Category</dt>
+                <dd class="col-sm-9">@Model.CategoryTypes</dd>
+
+                <dt class="col-sm-3 text-muted">Dimensions (HxWxL)</dt>
+                <dd class="col-sm-9">@Model.Height x @Model.Width x @Model.Length</dd>
+
+                <dt class="col-sm-3 text-muted">Price</dt>
+                <dd class="col-sm-9 text-success">@Model.Price.ToString("C")</dd>
+
+                <dt class="col-sm-3 text-muted">Stock</dt>
+                <dd class="col-sm-9">
+                    @if (Model.Stock > 0)
+                    {
+                        <span class="text-success">In Stock (@Model.Stock)</span>
+                    }
+                    else
+                    {
+                        <span class="text-danger">Out of Stock</span>
+                    }
+                </dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="mt-4 text-center">
+        @if (User.IsInRole("Admin"))
+        {
+            <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-warning me-2">Edit</a>
+        }
+
+        @if (User.IsInRole("Buyer"))
+        {
+            <a asp-action="AddToCart" asp-route-id="@Model?.Id" class="btn btn-primary me-2">Add to Cart</a>
+        }
+        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+    </div>
+</div>

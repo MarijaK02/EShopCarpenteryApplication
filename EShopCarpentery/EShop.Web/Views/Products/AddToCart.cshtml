@@ -1,0 +1,31 @@
+﻿@model EShop.Web.Models.Domain.ProductInShoppingCart
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Add Product to Shopping Cart</h2>
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-body">
+                    <form asp-action="AddToCartConfirmed">
+                        <!-- Hidden Input for Product ID -->
+                        <input type="hidden" asp-for="ProductId" />
+
+                        <!-- Quantity Input -->
+                        <div class="form-group mb-3">
+                            <label asp-for="Quantity" class="form-label fw-bold">Quantity</label>
+                            <input asp-for="Quantity" class="form-control" placeholder="Enter quantity" />
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-info text-white fw-bold">
+                                <i class="fas fa-cart-plus me-2"></i>Add to Cart
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

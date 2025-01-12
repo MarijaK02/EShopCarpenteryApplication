@@ -1,0 +1,72 @@
+﻿@model EShop.Web.Models.DTO.SuccessDto
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Your order has been successfully sent to the Supplier. Here are the details:</h2>
+
+    <!-- Order Details -->
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <h3 class="card-title mb-3">Order Details</h3>
+            <table class="table table-bordered table-striped">
+                <tr>
+                    <th>Order ID</th>
+                    <td>@Model.Order.Id</td>
+                </tr>
+                <tr>
+                    <th>Supplier Information</th>
+                    <td>@Model.Order.Supplier?.Name <br /> @Model.Order.Supplier?.Address <br /> @Model.Order.Supplier?.ContactPhone</td>
+                </tr>
+                <tr>
+                    <th>Total Amount</th>
+                    <td>@Model.Order.Price.ToString("C")</td>
+                </tr>
+                <tr>
+                    <th>Status</th>
+                    <td>@Model.Order.Status</td>
+                </tr>
+                <tr>
+                    <th>Shipping Address</th>
+                    <td>@Model.Order.Address</td>
+                </tr>
+                @if (Model.WithPayment)
+                {
+                    <tr>
+                        <th>Payment Status</th>
+                        <td>Paid</td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+
+    <!-- Order Items -->
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <h3 class="card-title mb-3">Order Items:</h3>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Item Name</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Order.ProductsInOrder)
+                    {
+                        <tr>
+                            <td>@item.Product.ProductName</td>
+                            <td>@item.Quantity</td>
+                            <td>@(item.Product.Price * item.Quantity).ToString("C")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Back to Home Button -->
+    <div class="text-center mt-4">
+        <a href="@Url.Action("Index", "Home")" class="btn btn-primary">Go to Home Page</a>
+    </div>
+</div>

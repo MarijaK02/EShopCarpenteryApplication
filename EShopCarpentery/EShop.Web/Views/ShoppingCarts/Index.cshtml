@@ -1,0 +1,48 @@
+﻿@model EShop.Web.Models.Domain.ShoppingCart
+
+@{
+    ViewData["Title"] = "Shopping Cart";
+}
+
+<h2>Your Shopping Cart</h2>
+
+@if (Model.ProductInShoppingCarts != null && Model.ProductInShoppingCarts.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ProductInShoppingCarts)
+            {
+                var product = item.Product;
+                <tr>
+                    <td>@product.ProductName</td>
+                    <td>@product.Price.ToString("C")</td>
+                    <td>@item.Quantity</td>
+                    <td>@(item.Quantity * product.Price).ToString("C")</td>
+                    <td>
+                        <form method="post" action="@Url.Action("RemoveFromCart", "ShoppingCart")">
+                            <input type="hidden" name="cartItemId" value="@item.Id" />
+                            <button type="submit" class="btn btn-danger">Remove</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h3>Total: @Model.ProductInShoppingCarts.Sum(ci => ci.Quantity * ci.Product.Price).ToString("C")</h3>
+
+    <a href="@Url.Action("CreateOrder", "Orders")" class="btn btn-success">Proceed to Checkout</a>
+}
+else
+{
+    <p>Your shopping cart is empty.</p>
+}

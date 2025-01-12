@@ -1,0 +1,59 @@
+﻿@model EShop.Web.Models.Domain.Order
+
+@{
+    ViewData["Title"] = "Create Order";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Create Your Order</h2>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-body">
+                    <form asp-action="Create" method="post">
+                        <!-- Delivery Address -->
+                        <div class="form-group mb-3">
+                            <label asp-for="Address" class="form-label fw-bold">Delivery Address</label>
+                            <input asp-for="Address" class="form-control" placeholder="Enter your delivery address" />
+                            <span asp-validation-for="Address" class="text-danger"></span>
+                        </div>
+
+                        <!-- Contact Phone -->
+                        <div class="form-group mb-3">
+                            <label asp-for="ContactPhone" class="form-label fw-bold">Contact Phone</label>
+                            <input asp-for="ContactPhone" class="form-control" placeholder="Enter your contact number" />
+                            <span asp-validation-for="ContactPhone" class="text-danger"></span>
+                        </div>
+
+                        <!-- Additional Information -->
+                        <div class="form-group mb-4">
+                            <label asp-for="AdditionalInformation" class="form-label fw-bold">Additional Information</label>
+                            <textarea asp-for="AdditionalInformation" class="form-control" rows="4" placeholder="Any additional instructions?"></textarea>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary fw-bold">
+                                <i class="fas fa-check-circle me-2"></i>Create Order
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Back Link -->
+            <div class="text-center mt-3">
+                <a asp-action="Details" asp-controller="ShoppingCarts" class="text-decoration-none">
+                    <i class="fas fa-arrow-left me-2"></i>Back to Shopping Cart
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
